@@ -5,10 +5,14 @@ namespace TaskBender.Services
 {
     internal class ConditionUpdater
     {
-        public void Update<T>(ref T condition) where T : Condition
+        public bool Update<T>(ref T condition) where T : Condition
         {
             if (condition is ConditionHit conditionHit)
+            {
                 this.updateConditionHit(ref conditionHit);
+                return true;
+            }
+            return false;
         }
 
         private void updateConditionHit(ref ConditionHit ___Condition)

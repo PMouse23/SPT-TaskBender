@@ -26,15 +26,13 @@ namespace TaskBender.Patches
             try
             {
                 Condition condition = __instance;
-                if (condition is ConditionMultipleTargets)
-                    return;
-                if (condition is ConditionEquipment)
-                    return;
-                condition.DynamicLocale = true;
-                conditionUpdater.Update(ref condition);
-                //HACK two times so the message is correctly modified.
-                __result = condition.FormattedDescription;
-                __result = condition.FormattedDescription;
+                if (conditionUpdater.Update(ref condition))
+                {
+                    condition.DynamicLocale = true;
+                    //HACK two times so the message is correctly modified.
+                    __result = condition.FormattedDescription;
+                    __result = condition.FormattedDescription;
+                }
             }
             catch (Exception exception)
             {
