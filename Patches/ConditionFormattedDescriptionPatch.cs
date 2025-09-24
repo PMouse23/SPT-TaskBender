@@ -26,20 +26,21 @@ namespace TaskBender.Patches
             try
             {
                 Condition condition = __instance;
-
-                if (condition is ConditionZone)
+                if (condition is ConditionMultipleTargets)
                     return;
-
                 condition.DynamicLocale = true;
                 conditionUpdater.Update(ref condition);
                 //HACK two times so the message is correctly modified.
                 __result = condition.FormattedDescription;
                 __result = condition.FormattedDescription;
-                LogResultDebug(__instance, __result);
             }
             catch (Exception exception)
             {
                 LogHelper.LogExceptionToConsole(exception);
+            }
+            finally
+            {
+                LogResultDebug(__instance, __result);
             }
         }
 
