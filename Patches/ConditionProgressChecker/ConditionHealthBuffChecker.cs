@@ -13,6 +13,8 @@ namespace TaskBender.Patches.ConditionProgressChecker
         {
             if (___Condition == null)
                 return;
+            if (Globals.IgnoreHealthBuffRequirements)
+                __result = true;
             LogResultDebug(___Condition, __result);
         }
 

@@ -13,8 +13,8 @@ namespace TaskBender.Patches.ConditionProgressChecker
         {
             if (___Condition == null)
                 return;
-            //TODO setting
-            __result = true;
+            if (Globals.IgnoreHealthEffectRequirements)
+                __result = true;
             LogResultDebug(___Condition, __result);
         }
 
