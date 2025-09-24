@@ -2,6 +2,7 @@
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using System;
+using System.Linq;
 using System.Reflection;
 using TaskBender.Helpers;
 using TaskBender.Services;
@@ -26,6 +27,12 @@ namespace TaskBender.Patches
             try
             {
                 Condition condition = __instance;
+                if (condition is ConditionCounterCreator conditionCounterCreator
+                    && conditionCounterCreator.Conditions.Any(isUpdatableCondition))
+                {
+                    conditionCounterCreator.Conditions.Remove(condition);
+                    __result = conditionCounterCreator.LocalizeDescription();
+                }
                 if (conditionUpdater.Update(ref condition))
                 {
                     condition.DynamicLocale = true;
@@ -54,6 +61,11 @@ namespace TaskBender.Patches
         protected override MethodBase GetTargetMethod()
         {
             return AccessTools.FirstMethod(typeof(Condition), this.isTargetMethod);
+        }
+
+        private static bool isUpdatableCondition(Condition condition)
+        {
+            return condition is ConditionHit;
         }
 
         private bool isTargetMethod(MethodBase method)
