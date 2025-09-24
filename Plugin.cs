@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TaskBender.Helpers;
+using TaskBender.Patches;
 using TaskBender.Patches.ConditionProgressChecker;
 
 #nullable enable
@@ -59,6 +60,8 @@ namespace TaskBender
             //new ConditionTransitionLocationChecker().Enable();
             //new ConditionUnderArtilleryFireChecker().Enable();
             new ConditionUseItemChecker().Enable();
+
+            new ConditionFormattedDescriptionPatch().Enable();
         }
 
         private void global_SettingChanged(object sender, EventArgs e)

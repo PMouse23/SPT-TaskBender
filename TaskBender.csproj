@@ -91,6 +91,8 @@
   <ItemGroup>
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="Models\KillTarget.cs" />
+    <Compile Include="Patches\ConditionFormattedDescriptionPatch.cs" />
     <Compile Include="Patches\ConditionProgressChecker\CheckerBasePatch.cs" />
     <Compile Include="Patches\ConditionProgressChecker\ConditionBlockChecker.cs" />
     <Compile Include="Patches\ConditionProgressChecker\ConditionCounterCreatorChecker.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Patches\ConditionProgressChecker\ConditionUseItemChecker.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ConditionUpdater.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

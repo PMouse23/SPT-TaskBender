@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using TaskBender.Helpers;
+using TaskBender.Services;
 
 #nullable enable
 
@@ -14,6 +15,8 @@ namespace TaskBender.Patches.ConditionProgressChecker
 {
     internal class CheckerBasePatch : ModulePatch
     {
+        public static readonly ConditionUpdater ConditionUpdater = new ConditionUpdater();
+
         private Type conditionType;
 
         internal CheckerBasePatch(Type conditionType)

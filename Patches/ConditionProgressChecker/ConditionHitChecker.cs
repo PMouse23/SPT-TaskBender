@@ -21,9 +21,8 @@ namespace TaskBender.Patches.ConditionProgressChecker
         {
             if (___Condition == null)
                 return;
-            ConditionHit condition = ___Condition;
-            condition.target = "Any"; //Any,Savage,AnyPmc,Usec,Bear,Enemy
-            LogJsonDebug(condition);
+            ConditionUpdater.Update(ref ___Condition);
+            LogJsonDebug(___Condition);
         }
     }
 }
