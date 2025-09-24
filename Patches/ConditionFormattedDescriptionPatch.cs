@@ -28,6 +28,8 @@ namespace TaskBender.Patches
                 Condition condition = __instance;
                 if (condition is ConditionMultipleTargets)
                     return;
+                if (condition is ConditionEquipment)
+                    return;
                 condition.DynamicLocale = true;
                 conditionUpdater.Update(ref condition);
                 //HACK two times so the message is correctly modified.
