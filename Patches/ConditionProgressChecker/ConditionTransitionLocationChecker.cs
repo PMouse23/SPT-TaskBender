@@ -1,6 +1,8 @@
 ﻿using EFT.Quests;
 using SPT.Reflection.Patching;
 
+#nullable enable
+
 namespace TaskBender.Patches.ConditionProgressChecker
 {
     internal class ConditionTransitionLocationChecker : CheckerBasePatch
