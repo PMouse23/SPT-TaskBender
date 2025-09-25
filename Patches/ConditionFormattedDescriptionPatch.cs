@@ -7,6 +7,8 @@ using System.Reflection;
 using TaskBender.Helpers;
 using TaskBender.Services;
 
+#nullable enable
+
 namespace TaskBender.Patches
 {
     internal class ConditionFormattedDescriptionPatch : ModulePatch

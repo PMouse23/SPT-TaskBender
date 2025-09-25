@@ -1,6 +1,8 @@
 ﻿using EFT.Quests;
 using TaskBender.Models;
 
+#nullable enable
+
 namespace TaskBender.Services
 {
     internal class ConditionUpdater
