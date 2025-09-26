@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TaskBender.Helpers;
+using TaskBender.Models;
 using TaskBender.Patches;
 using TaskBender.Patches.ConditionProgressChecker;
 
@@ -19,6 +20,31 @@ namespace TaskBender
     public class Plugin : BaseUnityPlugin
     {
         private ConfigEntry<bool> debug;
+
+        private ConfigEntry<bool> ignoreEquipmentRequirements;
+
+        private ConfigEntry<bool> ignoreExitStatus;
+
+        private ConfigEntry<bool> ignoreHealthBuffRequirements;
+
+        private ConfigEntry<bool> ignoreHealthEffectRequirements;
+
+        private ConfigEntry<bool> ignoreInZoneRequirements;
+
+        private ConfigEntry<bool> ignoreLocationRequirements;
+
+        private ConfigEntry<KillTarget> overrideHitTarget;
+
+        private ConfigEntry<bool> overrideKillTarget;
+
+        private ConfigEntry<bool> overrideShotsTarget;
+
+        private ConfigEntry<T> addConfigurable<T>(string section, string key, T defaultValue, string description)
+        {
+            ConfigEntry<T> configEntry = this.Config.Bind(section, key, defaultValue, description);
+            configEntry.SettingChanged += this.global_SettingChanged;
+            return configEntry;
+        }
 
         private void Awake()
         {
@@ -90,8 +116,16 @@ namespace TaskBender
 
         private void setConfigurables()
         {
-            this.debug = this.Config.Bind("General", "Debug", false, "Debug");
-            this.debug.SettingChanged += this.global_SettingChanged;
+            this.debug = this.addConfigurable(section: "General", key: "Debug", defaultValue: false, description: "Debug");
+            this.ignoreEquipmentRequirements = this.addConfigurable(section: "Ignore", key: "IgnoreEquipmentRequirements", defaultValue: false, description: "Ignore equipment requirements.");
+            this.ignoreExitStatus = this.addConfigurable(section: "Ignore", key: "IgnoreExitStatus", defaultValue: false, description: "Ignore exit status.");
+            this.ignoreHealthBuffRequirements = this.addConfigurable(section: "Ignore", key: "IgnoreHealthBuffRequirements", defaultValue: false, description: "Ignore health buff requirements.");
+            this.ignoreHealthEffectRequirements = this.addConfigurable(section: "Ignore", key: "IgnoreHealthEffectRequirements", defaultValue: false, description: "Ignore health effect requirements.");
+            this.ignoreInZoneRequirements = this.addConfigurable(section: "Ignore", key: "IgnoreInZoneRequirements", defaultValue: false, description: "Ignore in zone requirements.");
+            this.ignoreLocationRequirements = this.addConfigurable(section: "Ignore", key: "IgnoreLocationRequirements", defaultValue: false, description: "Ignore location requirements.");
+            this.overrideHitTarget = this.addConfigurable(section: "ShootAndKill", key: "OverrideHitTarget", defaultValue: KillTarget.AsInTask, description: "Override targets for quests.");
+            this.overrideKillTarget = this.addConfigurable(section: "ShootAndKill", key: "OverrideKillTarget", defaultValue: false, description: "Use targets override for kill quests.");
+            this.overrideShotsTarget = this.addConfigurable(section: "ShootAndKill", key: "OverrideShotsTarget", defaultValue: false, description: "Use targets override for shots quests.");
 
             this.setGlobalSettings();
         }
@@ -99,6 +133,15 @@ namespace TaskBender
         private void setGlobalSettings()
         {
             Globals.Debug = this.debug.Value;
+            Globals.IgnoreEquipmentRequirements = this.ignoreEquipmentRequirements.Value;
+            Globals.IgnoreExitStatus = this.ignoreExitStatus.Value;
+            Globals.IgnoreHealthBuffRequirements = this.ignoreHealthBuffRequirements.Value;
+            Globals.IgnoreHealthEffectRequirements = this.ignoreHealthEffectRequirements.Value;
+            Globals.IgnoreInZoneRequirements = this.ignoreInZoneRequirements.Value;
+            Globals.IgnoreLocationRequirements = this.ignoreLocationRequirements.Value;
+            Globals.OverrideHitTarget = this.overrideHitTarget.Value;
+            Globals.OverrideKillTarget = this.overrideKillTarget.Value;
+            Globals.OverrideShotsTarget = this.overrideShotsTarget.Value;
         }
     }
 }
