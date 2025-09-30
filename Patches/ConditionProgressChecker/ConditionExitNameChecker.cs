@@ -23,8 +23,8 @@ namespace TaskBender.Patches.ConditionProgressChecker
         {
             if (___Condition == null)
                 return;
-            ConditionExitName condition = ___Condition;
-            LogJsonDebug(condition);
+            ConditionUpdater.Update(ref ___Condition);
+            LogJsonDebug(___Condition);
         }
     }
 }
