@@ -22,6 +22,50 @@ namespace TaskBender.Services
             return false;
         }
 
+        private static void updateDistanceRequirements(ConditionHit condition)
+        {
+            if (condition.distance == null)
+                return;
+            if (Globals.DistanceMultiplier == 1.0)
+                return;
+            double newValue = condition.distance.value * Globals.DistanceMultiplier;
+            condition.distance.value = (int)newValue;
+        }
+
+        private static void updateEnemyEquipmentRequirements(ConditionHit condition)
+        {
+            if (Globals.IgnoreEnemyEquipmentRequirements == false)
+                return;
+            condition.enemyEquipmentInclusive = [];
+            condition.enemyEquipmentExclusive = [];
+        }
+
+        private static void updateEnemyHealthEffectRequirements(ConditionHit condition)
+        {
+            if (Globals.IgnoreEnemyHealthEffectRequirements)
+                condition.enemyHealthEffects = [];
+        }
+
+        private static void updateWeaponCategoryRequirements(ConditionHit condition)
+        {
+            if (Globals.IgnoreWeaponCategoryRequirements)
+                condition.weaponCategories = [];
+        }
+
+        private static void updateWeaponModRequirements(ConditionHit condition)
+        {
+            if (Globals.IgnoreWeaponModRequirements == false)
+                return;
+            condition.weaponModsInclusive = [];
+            condition.weaponModsExclusive = [];
+        }
+
+        private static void updateWeaponRequirements(ConditionHit condition)
+        {
+            if (Globals.IgnoreWeaponRequirements)
+                condition.weapon = [];
+        }
+
         private void updateConditionCounterCreator(ref ConditionCounterCreator conditionCounterCreator)
         {
             foreach (Condition condition in conditionCounterCreator.Conditions)
@@ -42,16 +86,12 @@ namespace TaskBender.Services
                 killTarget = KillTarget.AsInTask;
             if (killTarget != KillTarget.AsInTask)
                 condition.target = killTarget.ToString();
-            //TODO add settings.
-            condition.weapon = [];
-            condition.weaponCategories = [];
-            condition.weaponModsInclusive = [];
-            condition.weaponModsExclusive = [];
-            condition.enemyEquipmentInclusive = [];
-            condition.enemyEquipmentExclusive = [];
-            condition.enemyHealthEffects = [];
-            if (condition.distance != null)
-                condition.distance.value = 0;
+            updateWeaponRequirements(condition);
+            updateWeaponCategoryRequirements(condition);
+            updateWeaponModRequirements(condition);
+            updateEnemyEquipmentRequirements(condition);
+            updateEnemyHealthEffectRequirements(condition);
+            updateDistanceRequirements(condition);
         }
     }
 }

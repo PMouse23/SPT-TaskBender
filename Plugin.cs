@@ -20,23 +20,20 @@ namespace TaskBender
     public class Plugin : BaseUnityPlugin
     {
         private ConfigEntry<bool> debug;
-
+        private ConfigEntry<double> distanceMultiplier;
+        private ConfigEntry<bool> ignoreEnemyEquipmentRequirements;
+        private ConfigEntry<bool> ignoreEnemyHealthEffectRequirements;
         private ConfigEntry<bool> ignoreEquipmentRequirements;
-
         private ConfigEntry<bool> ignoreExitStatus;
-
         private ConfigEntry<bool> ignoreHealthBuffRequirements;
-
         private ConfigEntry<bool> ignoreHealthEffectRequirements;
-
         private ConfigEntry<bool> ignoreInZoneRequirements;
-
         private ConfigEntry<bool> ignoreLocationRequirements;
-
+        private ConfigEntry<bool> ignoreWeaponCategoryRequirements;
+        private ConfigEntry<bool> ignoreWeaponModRequirements;
+        private ConfigEntry<bool> ignoreWeaponRequirements;
         private ConfigEntry<KillTarget> overrideHitTarget;
-
         private ConfigEntry<bool> overrideKillTarget;
-
         private ConfigEntry<bool> overrideShotsTarget;
 
         private ConfigEntry<T> addConfigurable<T>(string section, string key, T defaultValue, string description)
@@ -126,7 +123,12 @@ namespace TaskBender
             this.overrideHitTarget = this.addConfigurable(section: "ShootAndKill", key: "OverrideHitTarget", defaultValue: KillTarget.AsInTask, description: "Override targets for quests.");
             this.overrideKillTarget = this.addConfigurable(section: "ShootAndKill", key: "OverrideKillTarget", defaultValue: false, description: "Use targets override for kill quests.");
             this.overrideShotsTarget = this.addConfigurable(section: "ShootAndKill", key: "OverrideShotsTarget", defaultValue: false, description: "Use targets override for shots quests.");
-
+            this.ignoreWeaponRequirements = this.addConfigurable(section: "ShootAndKill", key: "IgnoreWeaponRequirements", defaultValue: false, description: "Ignore weapon requirements.");
+            this.ignoreWeaponCategoryRequirements = this.addConfigurable(section: "ShootAndKill", key: "IgnoreWeaponCategoryRequirements", defaultValue: false, description: "Ignore weapon category requirements.");
+            this.ignoreWeaponModRequirements = this.addConfigurable(section: "ShootAndKill", key: "IgnoreWeaponModRequirements", defaultValue: false, description: "Ignore weapon mod requirements.");
+            this.ignoreEnemyEquipmentRequirements = this.addConfigurable(section: "ShootAndKill", key: "IgnoreEnemyEquipmentRequirements", defaultValue: false, description: "Ignore enemy equipment requirements.");
+            this.ignoreEnemyHealthEffectRequirements = this.addConfigurable(section: "ShootAndKill", key: "IgnoreEnemyHealthEffectRequirements", defaultValue: false, description: "Ignore enemy health effect requirements.");
+            this.distanceMultiplier = this.addConfigurable(section: "ShootAndKill", key: "DistanceMultiplier", defaultValue: 1.0, description: "Distance multiplier.");
             this.setGlobalSettings();
         }
 
@@ -142,6 +144,12 @@ namespace TaskBender
             Globals.OverrideHitTarget = this.overrideHitTarget.Value;
             Globals.OverrideKillTarget = this.overrideKillTarget.Value;
             Globals.OverrideShotsTarget = this.overrideShotsTarget.Value;
+            Globals.IgnoreWeaponRequirements = this.ignoreWeaponRequirements.Value;
+            Globals.IgnoreWeaponCategoryRequirements = this.ignoreWeaponCategoryRequirements.Value;
+            Globals.IgnoreWeaponModRequirements = this.ignoreWeaponModRequirements.Value;
+            Globals.IgnoreEnemyEquipmentRequirements = this.ignoreEnemyEquipmentRequirements.Value;
+            Globals.IgnoreEnemyHealthEffectRequirements = this.ignoreEnemyHealthEffectRequirements.Value;
+            Globals.DistanceMultiplier = this.distanceMultiplier.Value;
         }
     }
 }
