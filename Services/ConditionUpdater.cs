@@ -14,13 +14,26 @@ namespace TaskBender.Services
                 this.updateConditionHit(ref conditionHit);
                 return true;
             }
+            else if (condition is ConditionCounterCreator conditionCounterCreator)
+            {
+                this.updateConditionCounterCreator(ref conditionCounterCreator);
+                return true;
+            }
             return false;
         }
 
-        private void updateConditionHit(ref ConditionHit ___Condition)
+        private void updateConditionCounterCreator(ref ConditionCounterCreator conditionCounterCreator)
+        {
+            foreach (Condition condition in conditionCounterCreator.Conditions)
+            {
+                Condition updateCondition = condition;
+                this.Update(ref updateCondition);
+            }
+        }
+
+        private void updateConditionHit(ref ConditionHit condition)
         {
             KillTarget killTarget = Globals.OverrideHitTarget;
-            ConditionHit condition = ___Condition;
             if (condition is ConditionShots
                 && Globals.OverrideShotsTarget == false)
                 killTarget = KillTarget.AsInTask;

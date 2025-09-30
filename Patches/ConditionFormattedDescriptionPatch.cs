@@ -67,7 +67,9 @@ namespace TaskBender.Patches
 
         private static bool isUpdatableCondition(Condition condition)
         {
-            return condition is ConditionHit;
+            return condition is ConditionHit
+                || (condition is ConditionCounterCreator conditionCounterCreator
+                    && conditionCounterCreator.Conditions.Any(isUpdatableCondition));
         }
 
         private bool isTargetMethod(MethodBase method)
